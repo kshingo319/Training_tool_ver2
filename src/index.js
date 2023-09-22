@@ -17,6 +17,10 @@ var start_data = [];
 //1問ごとに取得するデータ配列
 var alldata = [];
 
+//ボタンの状態(0=「良品」押せる．1=「良品」押せない)
+var decision_cnt = 0;
+
+
 //現在の日付時刻を取得する
 function getCurrentTime() {
 	var now = new Date();
@@ -256,7 +260,14 @@ function countUp_quality() {
     el[i].checked = false;
   }*/
 
+  decision_cnt = 0;
+
+  for (let i = 0; i < 8; i++) {
+    checkpos[i] = false;
+  }
 }
+
+/*
 const decide = document.getElementById("defective");
 decide.addEventListener("click", () => deciside());
 function deciside() {
@@ -265,6 +276,8 @@ function deciside() {
   document.getElementById("decision").style.display = 'inline';
   
 }
+*/
+
 //「不良品」ボタンを押したときに次の問題を表示してデータを配列に渡す
 function countUp_defective() {
   var checkbox = [];
@@ -323,18 +336,25 @@ function countUp_defective() {
   for (let i = 0; i < el.length; i++) {
     el[i].checked = false;
   }
-  */
-
+  
   document.getElementById('quality').style.display = 'inline';
   document.getElementById('defective').style.display = 'inline';
   document.getElementById("decision").style.display = 'none';
+  */
+  decision_cnt = 0;
+  
+  for (let i = 0; i < 8; i++) {
+    checkpos[i] = false;
+  }
+  
   c.clearRect(0, 0, 500, 168)
+  document.getElementById('quality').style.display = 'inline';
 }
 
 const quality = document.getElementById("quality");
 quality.addEventListener("click", () => countUp_quality());
 
-const defective = document.getElementById("decision");
+const defective = document.getElementById("defective");
 defective.addEventListener("click", () => countUp_defective());
 
 //GASにテータ送信
@@ -355,7 +375,8 @@ function postData_quality() {
   fetch(URL, postparam);
   return quality.textContent;
 }
-//GASにテータ送信
+
+//GASにテータ送信(不要)
 function postData_defective() {
   var dec = decision(1);
   let URL =
@@ -378,7 +399,13 @@ function postData_defective() {
 
 var checkpos = new Array(8);
 
+//チェック用の配列用意
+for (let i = 0; i < 8; i++) {
+  checkpos[i] = false;
+}
+
 document.getElementById( "canvas" ).addEventListener("click", function(event){
+  console.log(decision_cnt);
 	var canvas = document.getElementById("canvas");
   var c = canvas.getContext("2d");
   var clickX = event.pageX ;
@@ -399,7 +426,10 @@ document.getElementById( "canvas" ).addEventListener("click", function(event){
   /*console.log(posx);
   console.log(posy);*/
   //位置から範囲を指定しその範囲を四角で囲む
-
+  if(decision_cnt == 0){
+    document.getElementById('quality').style.display = 'none';
+    document.getElementById('defective').style.display = 'inline';
+    //document.getElementById("decision").style.display = 'inline';
     if(posy>0 && posy<=85){
       if(posx>0 && posx<=125){
         if(checkpos[0]){
@@ -477,6 +507,16 @@ document.getElementById( "canvas" ).addEventListener("click", function(event){
         }
       }
     }
+      decision_cnt = 0;
+      document.getElementById('quality').style.display = 'inline';
+      for (let i = 0; i < 8; i++) {
+        if(checkpos[i]==true){
+          decision_cnt = 0;
+          document.getElementById('quality').style.display = 'none';
+        }
+      }    
+    
+    }
 
   });
 
@@ -505,6 +545,7 @@ c.stroke();
 c.strokeRect(50, 20, 450, 140);
 */
 
+/*
 //「全て選択」のチェックボックス
 let checkAll = document.getElementById("checkAll");
 //「全て選択」以外のチェックボックス
@@ -517,7 +558,9 @@ const funcCheckAll = (bool) => {
         el[i].checked = bool;
     }
 };
+*/
 
+/*
 //「checks」のclassを持つ要素のチェック状態で「全て選択」のチェックをON/OFFする
 const funcCheck = () => {
     let count = 0;
@@ -542,7 +585,7 @@ checkAll.addEventListener("click", () => {
 for (let i = 0; i < el.length; i++) {
     el[i].addEventListener("click", funcCheck, false);
 }
-
+*/
 
 //const clickBtn = document.getElementById('click-btn');
 const clickBtn = document.getElementsByClassName('ans_btn');
@@ -557,7 +600,7 @@ var que_cnt = 10;
 for (var k =0; k<clickBtn.length; k++){
   clickBtn[k].addEventListener('click', () => {
   //console.log(question_num);
-   if(question_num % 10 == 0){
+   if(question_num % 10 == 0 && question_num != 0){
     if(question_num == 40){
       document.getElementById("close").innerHTML = `<button type="button"id="close">訓練を終了する</button>`;
     }
@@ -612,7 +655,7 @@ for (var k =0; k<clickBtn.length; k++){
 
 // ポップアップの外側又は戻るマークをクリックしたときポップアップを閉じる
 popupWrapper.addEventListener('click', e => {
-  if (e.target.id === popupWrapper.id || e.target.id === close.id) {
+  if (e.target.id === close.id) {
     var now = getCurrentTime();
     var look_data = [];
     look_data.push(now);
