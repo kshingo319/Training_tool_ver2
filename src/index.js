@@ -57,11 +57,14 @@ var copy = new Date();
 datetime.push(copy);
 */
 //曜日によって使用するデータセットを変える
+
 var daytest = new Date();
-var day_id = daytest.getDay();
+//var day_id = daytest.getDay();
+var day_id = 1;
 var img_dataset =["image0","image1","image2","image3","image4"];
+//var dataset_today = img_dataset[day_id-1];
 var dataset_today = img_dataset[0];
-console.log(dataset_today);
+
 
 var now = getCurrentTime();
 
@@ -405,7 +408,7 @@ for (let i = 0; i < 8; i++) {
 }
 
 document.getElementById( "canvas" ).addEventListener("click", function(event){
-  console.log(decision_cnt);
+  //console.log(decision_cnt);
 	var canvas = document.getElementById("canvas");
   var c = canvas.getContext("2d");
   var clickX = event.pageX ;
