@@ -362,7 +362,7 @@ defective.addEventListener("click", () => countUp_defective());
 
 //GASにテータ送信
 function postData_quality() {
-    let URL ="https://script.google.com/macros/s/AKfycbzylsiBCMxURuzlEb_HTC2XPhsk8dQfSlc4S-gvWl0llnqVpD08Nd4J_JYFkTxTvprW/exec";
+     let URL ="https://script.google.com/macros/s/AKfycbw4mwL_S0c3VECrC1b0gIKpdPmzL_yIiDzeWK3PX6GSjqLafE_kvYtb67-dplTlIBFz/exec"; 
   let SendDATA = {
     //answer: quality.textContent,
     answer: alldata,
