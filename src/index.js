@@ -383,7 +383,7 @@ function postData_quality() {
 function postData_defective() {
   var dec = decision(1);
   let URL =
-    "https://script.google.com/macros/s/AKfycbw1J30g-tNRPCpAB7Q5PmfzQ_vbHMCBwEH0h-DbzzzIiRF9D3-IuhtHdzvYDJNYAWJ19A/exec";
+    "https://script.google.com/macros/s/1M2lfLnkoXbgVDRGHwJDYDFMeY3maLt_ywpI882qMUsn7OS7HClDTemYV/exec";
   let SendDATA = {
     answer: defective.textContent,
   };
