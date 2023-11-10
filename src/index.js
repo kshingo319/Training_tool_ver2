@@ -60,7 +60,7 @@ datetime.push(copy);
 
 var daytest = new Date();
 //var day_id = daytest.getDay();
-var day_id = 2;
+var day_id = 3;
 var img_dataset =["image0","image1","image2","image3","image4"];
 //var dataset_today = img_dataset[day_id-1];
 var dataset_today = img_dataset[0];
